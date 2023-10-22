@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -43,31 +43,11 @@ def login():
         cur.close()
 
         if user:
-            return redirect('/dashboard')
+            return "Login Successful"
         else:
             return "Invalid Credentials"
     elif request.method == 'GET':
         # Handle the GET request for login if required
-        return render_template('login.html')  # Adjust with the appropriate template
+        pass
     else:
         return 'Method Not Allowed'
-
-# Dashboard
-@app.route('/dashboard')
-def dashboard():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM financial_data")
-    financial_data = cur.fetchall()
-
-    cur.execute("SELECT * FROM transactions")
-    transactions = cur.fetchall()
-
-    cur.execute("SELECT * FROM budgets")
-    budgets = cur.fetchall()
-
-    cur.close()
-
-    return render_template('dashboard.html', financial_data=financial_data, transactions=transactions, budgets=budgets)
-
-if __name__ == '__main__':
-    app.run(debug=True)

@@ -1,10 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FinancePal - Dashboard</title>
 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-{% extends 'base.html' %}
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-{% block title %}Dashboard - Personal Finance Manager{% endblock %}
+<style>
+.card {
+  margin: 20px 0;
+}
 
-{% block content %}
-    <h2>Welcome to Your Dashboard</h2>
-    <!-- Add your dashboard content here -->
-{% endblock %}
+.graph {
+  height: 200px;
+}
+
+.budget-bar {
+  height: 25px;
+  background: #ddd;
+  margin: 5px 0;
+}
+
+.budget-bar.over {
+  background: #dc3545;
+}
+
+.goal-progress {
+  height: 20px;
+  background: #007bff;
+  border-radius: 10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">FinancePal</a>
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Dashboard</a>
+      </li>
+    </ul>
+  </div>  
+</nav>
+
+<div class="container">
+  <h1>Dashboard</h1>
+  
+  <!-- Financial overview -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Financial Overview</h5>
+      
+      <p>Total Balance: $5,000</p>
+      <p>Total Income: $4,000</p>
+      <p>Total Expenses: $3,000</p>
+    </div>
+  </div>
+
+  <!-- Transactions -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Latest Transactions <a href="#" class="float-right">See all</a></h5>
+    
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+          </tr>  
+        </thead>
+        <tbody>
+          <tr>
+            <td>1/1/2022</td>
+            <td>Paycheck</td>
+            <td>Income</td>
+            <td>$2000</td>
+          </tr>
+          <tr>
+            <td>1/5/2022</td>
+            <td>Groceries</td>
+            <td>Food</td>
+            <td>$50</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Budgets -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Budgets <a href="#" class="float-right">Manage budgets</a></h5>
+    
+      <div class="budget-bar">
+        <div class="budget-bar over" style="width:60%">Food - $300 of $500 budget</div>  
+      </div>
+
+      <div class="budget-bar">
+        <div class="budget-bar" style="width:40%">Entertainment - $100 of $250 budget</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Expenses by Category</h5>
+      <canvas id="expensesChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Goals -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Goals</h5>
+      
+      <p>Vacation savings <div class="goal-progress" style="width:50%"></div> $1,000 saved of $2,000</p>
+      
+      <p>Rainy day fund <div class="goal-progress" style="width:25%"></div> $500 saved of $2,000</p>
+      
+    </div>
+  </div>
+  
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+<script>
+// Sample chart data
+const chartData = {
+  labels: ["Food", "Shopping", "Bills", "Entertainment"],
+  datasets: [{
+    label: "Expenses",
+    data: [300, 200, 100, 150],
+    backgroundColor: ["#ff6384", "#36a2eb", "#ffce56", "#cc65fe"]
+  }]
+}
+
+// Create chart
+new Chart(document.getElementById("expensesChart"), {
+  type: 'pie',
+  data: chartData
+});
+</script>
+
+</body>
+</html>
